@@ -86,6 +86,8 @@ class TestOptions(BaseOptions):
         self.parser.add_argument('--clevr_val_img_dir', default='../../data/raw/CLEVR_v1.0/images/val', type=str, help='clevr val image directory')
         self.parser.add_argument('--shuffle_data', default=0, type=int, help='shuffle dataloader')
         self.parser.add_argument('--use_cat_label', default=1, type=int, help='use object detector class label')
+        # toggle to use weighted output on attributes
+        self.parser.add_argument('--be_uncertain', action="store_true", default=False, type=bool, help='return uncertain classifications')
         self.is_train = False
 
 

@@ -16,7 +16,6 @@ def mkdirs(paths):
         if not os.path.exists(paths):
             os.makedirs(paths)
 
-
 def get_feat_vec_clevr(obj):
     attr_to_idx = {
         'sphere': 0,
@@ -41,6 +40,26 @@ def get_feat_vec_clevr(obj):
     feat_vec[15:] = obj['position']
     return list(feat_vec)
 
+def get_attrs_dist_clevr(feat_vec):
+    """
+    input: feature vector from the attribute generation network
+    output: object in extended clevr-format with weights per attr
+    """
+    shapes = ['sphere', 'cube', 'cylinder']
+    sizes = ['large', 'small']
+    materials = ['metal', 'rubber']
+    colors = ['blue', 'brown', 'cyan', 'gray', 'green', 'purple',
+        'red', 'yellow']
+    
+    obj = {
+        'shape': dict(zip(shapes, feat_vec[0:3])),
+        'size': dict(zip(sizes, feat_vec[3:5])),
+        'material': dict(zip(materials, feat_vec[5:7])),
+        'color': dict(zip(colors, feat_vec[7:15])),
+        'position': feat_vec[15:18].tolist()
+    }
+
+    return obj
 
 def get_attrs_clevr(feat_vec):
     shapes = ['sphere', 'cube', 'cylinder']

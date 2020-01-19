@@ -33,10 +33,13 @@ for data, _, idxs, cat_idxs in test_loader:
     for i in range(pred.shape[0]):
         if opt.dataset == 'clevr':
             img_id = idxs[i]
-            obj = utils.get_attrs_clevr(pred[i])
-            if opt.use_cat_label:
-                cid = cat_idxs[i] if isinstance(cat_idxs[i], int) else cat_idxs[i].item()
-                obj['color'], obj['material'], obj['shape'] = cat_dict[cid].split(' ')
+            if opt.be_uncertain:
+                obj = utils.get_attrs_dist_clevr(pred[i])
+            else:
+                obj = utils.get_attrs_clevr(pred[i])
+                if opt.use_cat_label:
+                    cid = cat_idxs[i] if isinstance(cat_idxs[i], int) else cat_idxs[i].item()
+                    obj['color'], obj['material'], obj['shape'] = cat_dict[cid].split(' ')
         scenes[img_id]['objects'].append(obj)
     count += idxs.size(0)
     print('%d / %d objects processed' % (count, len(test_loader.dataset)))
