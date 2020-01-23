@@ -224,3 +224,11 @@ python tools/run_train.py \
     --load_checkpoint_path ../data/reason/outputs/model_pretrain_uniform_270pg/checkpoint.pt
 ```
 The output models are stored in the folder `{repo_root}/data/reason/outputs/model_reinforce_uniform_270pg`.
+
+## Installation Issues and Fixes
+
+If there's trouble compiling the MaskRNN models...
+1. Make sure to add `-std=c99` to the `CFLAGS` environment variable
+2. Make sure the CUDA version is correct by unlinking `usr/lib/cuda` and replacing it with a link to `usr/lib/cuda-9.0`
+
+If attribute extraction complains about `PILLOW_VERSION`, check out: https://github.com/python-pillow/Pillow/issues/4130. Specifically, duplicate the `_version.py` file as a `PILLOW_VERSION.py` file for backwards compatability.
